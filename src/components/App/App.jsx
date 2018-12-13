@@ -5,6 +5,8 @@ import moment from 'moment';
 
 class App extends Component {
 
+    // pushowanie do bazy danych
+
     // componentDidMount() {
 
         // const title = 'Po 40 tyg. ciąży badanie co 2-3 dni'
@@ -89,7 +91,7 @@ class App extends Component {
             });
             return;
         }
-        if (!this.state.year || this.state.year < 1950 || this.state.year <= 2017) {
+        if (!this.state.year || this.state.year <= 2017) {
             this.setState({
                 warning: "Nieprawidłowe pole rok",
                 isValid: false
@@ -98,7 +100,7 @@ class App extends Component {
         }
 
 
-        console.log('dziala', this.state.day, this.state.month, this.state.year);
+        // console.log('dziala', this.state.day, this.state.month, this.state.year);
 
         const currentDate = moment();
 
@@ -106,7 +108,7 @@ class App extends Component {
 
         const diffrence = currentDate.diff(dateFromForm, 'weeks');
 
-        console.log(diffrence)
+        // console.log(diffrence)
 
         let infoToDisplay = null;
 
@@ -140,9 +142,14 @@ class App extends Component {
          this.setState ({
             isValid: true,
             currentInfo: infoToDisplay,
-            week: diffrence
-            
+            week: diffrence,
+            day: '',
+            month: '', 
+            year: '',
+            warning: ''
         });
+
+        
 
     }
 
@@ -197,7 +204,7 @@ class App extends Component {
                                 <h2>{this.state.texts[this.state.currentInfo].title}</h2>
                                 <div className='lists'>
 
-                                    <div>
+                                    <div className='list-cont'>
                                         <div className='page-info-bar-section-header-list'>
                                         <h2>
                                             Świadczenia profilaktyczne wykonywane przez lekarza lub położną i działania w zakresie promocji zdrowia:
@@ -205,9 +212,6 @@ class App extends Component {
                                         </div>           
                                         <ol>
                                             {
-                                                // console.log(this.state.texts)
-
-                                                
                                                 this.state.texts[this.state.currentInfo].left.map((e,i) => {
                                                     return <li key={i}>{e}</li>
                                                 })
@@ -215,7 +219,7 @@ class App extends Component {
                                         </ol>
                                     </div>
 
-                                    <div>
+                                    <div className='list-cont'>
                                         <div className='page-info-bar-section-header-list'>
                                         <h2>Badania diagnostyczne i konsultacje medyczne</h2>
 
