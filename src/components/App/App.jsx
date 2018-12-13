@@ -31,7 +31,8 @@ class App extends Component {
         month: '',
         year: '',
         isValid: false,
-        currentInfo: 0
+        currentInfo: 0,
+        week: 0
     }
 
     componentDidMount() {
@@ -46,7 +47,7 @@ class App extends Component {
 
             this.setState({
                 texts: elements,
-                isFetching: false
+                isFetching: false,
             })
             
         });
@@ -110,20 +111,36 @@ class App extends Component {
         let infoToDisplay = null;
 
         if (diffrence < 11) {
-            console.log('jestes do 11 tygodnia ciazy')
+            console.log('jestes do 10 tygodnia ciazy')
             infoToDisplay = 0;
-        } else if (diffrence < 14) {
-            console.log('jestes do 14 dniu ciazy')
+        } else if (diffrence >= 11 && diffrence <= 14) {
+            console.log('jestes między 11 a 14 tygodniem ciazy')
             infoToDisplay = 1;
-        } else {
-            console.log('jestes po 14 tygodniu ciazy')
+        } else if (diffrence >= 15 && diffrence <= 20) {
+            console.log('jestes między 15 a 20 tygodniem ciazy')
             infoToDisplay = 2;
+        } else if (diffrence >= 21 && diffrence <= 26) {
+            console.log('jestes między 21 a 26 tygodniem ciazy')
+            infoToDisplay = 3;
+        } else if (diffrence >= 27 && diffrence <= 32) {
+            console.log('jestes między 27 a 32 tygodniem ciazy')
+            infoToDisplay = 4;
+        } else if (diffrence >= 33 && diffrence <= 37) {
+            console.log('jestes między 33 a 37 tygodniem ciazy')
+            infoToDisplay = 5;
+        } else if (diffrence >= 38 && diffrence <= 39) {
+            console.log('jestes między 38 a 39 tygodniem ciazy')
+            infoToDisplay = 6;
+        } else {
+            console.log('jestes po 40 tygodniu ciazy')
+            infoToDisplay = 7;
         }
 
 
          this.setState ({
             isValid: true,
-            currentInfo: infoToDisplay
+            currentInfo: infoToDisplay,
+            week: diffrence
             
         });
 
@@ -134,6 +151,7 @@ class App extends Component {
         if(this.state.isFetching) {
             return <h1>Uwaga bo...</h1>
         }
+
         return (
             <div className="App">
                 <div className='mainBackground'>
@@ -175,13 +193,15 @@ class App extends Component {
                     <div className='page-info-bar'>
                         <div className='container'>
                             <div className='page-info-bar-section'>
-                                <h1>Termin badań: Przedział tygodni</h1>
+                                <h1>Jesteś w {this.state.week} tygodniu</h1>
                                 <h2>{this.state.texts[this.state.currentInfo].title}</h2>
                                 <div className='lists'>
 
                                     <div>
                                         <div className='page-info-bar-section-header-list'>
-                                        <h2>Świadczenia profilaktyczne wykonywane przez lekarza lub położną i działania w zakresie promocji zdrowia:</h2>
+                                        <h2>
+                                            Świadczenia profilaktyczne wykonywane przez lekarza lub położną i działania w zakresie promocji zdrowia:
+                                        </h2>
                                         </div>           
                                         <ol>
                                             {
