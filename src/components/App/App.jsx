@@ -34,7 +34,9 @@ class App extends Component {
         year: '',
         isValid: false,
         currentInfo: 0,
-        week: 0
+        week: 0,
+
+        lists: false,
     }
 
     componentDidMount() {
@@ -50,6 +52,7 @@ class App extends Component {
             this.setState({
                 texts: elements,
                 isFetching: false,
+
             })
             
         });
@@ -113,28 +116,27 @@ class App extends Component {
         let infoToDisplay = null;
 
         if (diffrence < 11) {
-            console.log('jestes do 10 tygodnia ciazy')
             infoToDisplay = 0;
+
         } else if (diffrence >= 11 && diffrence <= 14) {
-            console.log('jestes między 11 a 14 tygodniem ciazy')
             infoToDisplay = 1;
+
         } else if (diffrence >= 15 && diffrence <= 20) {
-            console.log('jestes między 15 a 20 tygodniem ciazy')
             infoToDisplay = 2;
+
         } else if (diffrence >= 21 && diffrence <= 26) {
-            console.log('jestes między 21 a 26 tygodniem ciazy')
             infoToDisplay = 3;
+
         } else if (diffrence >= 27 && diffrence <= 32) {
-            console.log('jestes między 27 a 32 tygodniem ciazy')
             infoToDisplay = 4;
+
         } else if (diffrence >= 33 && diffrence <= 37) {
-            console.log('jestes między 33 a 37 tygodniem ciazy')
             infoToDisplay = 5;
+
         } else if (diffrence >= 38 && diffrence <= 39) {
-            console.log('jestes między 38 a 39 tygodniem ciazy')
             infoToDisplay = 6;
+
         } else {
-            console.log('jestes po 40 tygodniu ciazy')
             infoToDisplay = 7;
         }
 
@@ -149,33 +151,32 @@ class App extends Component {
             warning: ''
         });
 
-        
-
     }
 
     render() {
-
+        
         if(this.state.isFetching) {
             return <h1>Uwaga bo...</h1>
         }
-
+    
         return (
             <div className="App">
+
                 <div className='mainBackground'>
 
                     <nav className='page-navbar'>
                         <div className='container'>
                             <h1>DZIECKO W DRODZE!</h1>
                             <ul className="page-navbar-list">
-                            <li className="page-navbar-list-item">
+                                <li className="page-navbar-list-item">
                                     <a href="/" className='page-navbar-list-link'>Start</a>
                                 </li>
-                                <li className="page-navbar-list-item">
+                                {/* <li className="page-navbar-list-item">
                                     <a href="/" className='page-navbar-list-link'>Wybierz tydzień</a>
-                                </li>
-                                <li className="page-navbar-list-item">
+                                </li> */}
+                                {/* <li className="page-navbar-list-item">
                                     <a href="/" className='page-navbar-list-link'>Chat</a>
-                                </li>
+                                </li> */}
                                 <li className="page-navbar-list-item">
                                     <a href="/" className='page-navbar-list-link'>Zaloguj się</a>
                                 </li>
@@ -224,20 +225,22 @@ class App extends Component {
                                         <h2>Badania diagnostyczne i konsultacje medyczne</h2>
 
                                         </div>
-                                            <ol>
-                                                {
-                                                    this.state.texts[this.state.currentInfo].right.map((e,i) => {
-                                                        return <li key={i}>{e}</li>
-                                                    })
-                                                }
-                                            </ol>
+                                        <ol>
+                                            {
+                                                this.state.texts[this.state.currentInfo].right.map((e,i) => {
+                                                    return <li key={i}>{e}</li>
+                                                })
+                                            }
+                                        </ol>
                                     </div>
-                                    
+
                                 </div>
                             </div>
                         </div>
                     </div>
+
                 </div>
+                
             </div>
         );
     }

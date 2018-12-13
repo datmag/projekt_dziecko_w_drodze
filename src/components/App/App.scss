@@ -13,8 +13,7 @@
     // align-items: center;
 }
 
-
-// PAGE-NAVBAR
+// Page-Nav-bar
 
 .page-navbar .container {
     display: flex;
@@ -49,7 +48,6 @@
 .page-navbar-list-link:hover {
     color: var(--color1);
 }
-
 
 
 // PAGE-SEARCH-BAR
@@ -125,6 +123,7 @@
 
 .page-search-bar-form p {
     margin-top: 30px;
+    font-weight: 600;
 }
 
 
