@@ -1,0 +1,27 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Helvetica , sans-serif;
+    // background: url(./images/abdomen-adult-anticipation-1556672.jpg);
+    // background-repeat: no-repeat;
+    // background-size: cover;
+    // position: fixed;
+    // background-attachment: fixed;
+}
+
+.container {
+    width: 1055px;
+    margin: 0 auto;
+}
+
+:root {
+    --color: #C59885;
+    --color2: #AD1E34;
+    --color3: #F5CAAE;
+    --color4: #E5E6E7;
+    --color5: #8A1E26;
+}
