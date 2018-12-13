@@ -4,34 +4,13 @@ import * as firebase from 'firebase';
 import moment from 'moment';
 
 class App extends Component {
-
-    // pushowanie do bazy danych
-
-    // componentDidMount() {
-
-        // const title = 'Po 40 tyg. ciąży badanie co 2-3 dni'
-
-        // const text = 'Badanie ogólne podmiotowe i przedmiotowe.Badanie położnicze.Badanie we wzierniku i zestawione - według wskazań medycznych.Ocena ruchów płodu.Ocena czynności serca płodu.Pomiar ciśnienia tętniczego krwi.Pomiar masy ciała.Ocena ryzyka ciążowego.Propagowanie zdrowego stylu życia, w tym zdrowia jamy ustnej.Praktyczne i teoretyczne przygotowanie do porodu, połogu, karmienia piersią i rodzicielstwa w formie grupowej lub indywidualnej.Skierowanie do hospitalizacji po 41 tygodniu ciąży'
-
-        // const text2 = 'Badanie KTG.Badanie ultrasonograficzne (jednorazowo).'
-
-        // const data = {
-        //     title: title,
-        //     left: text.split('.'),
-        //     right: text2.split('.')
-        // }
-
-        // firebase.database()
-        //     .ref('/texts').push(data)
-    // }
-
     state = {
         texts: [],
         isFetching: true,
 
         day: '',
         month: '',
-        year: '',
+        year: '2018',
         isValid: false,
         currentInfo: 0,
         week: 0,
@@ -52,9 +31,7 @@ class App extends Component {
             this.setState({
                 texts: elements,
                 isFetching: false,
-
             })
-            
         });
     }
 
@@ -79,7 +56,7 @@ class App extends Component {
     sendMessage = (event) => {
         event.preventDefault();
 
-
+        // console.log(this.state.day, this.state.month, this.state.year)
         if (!this.state.day || this.state.day > 31 || this.state.day === 0) {
             this.setState({
                 warning: "Nieprawidłowe pole dzień",
@@ -87,6 +64,7 @@ class App extends Component {
             });
             return;
         }
+        
         if (!this.state.month || this.state.month === 0 || this.state.month > 12) {
             this.setState({
                 warning: "Nieprawidłowe pole miesiąc",
@@ -94,7 +72,7 @@ class App extends Component {
             });
             return;
         }
-        if (!this.state.year || this.state.year <= 2017) {
+        if (!this.state.year || this.state.year <= 2017 || this.state.year > 2018) {
             this.setState({
                 warning: "Nieprawidłowe pole rok",
                 isValid: false
@@ -102,44 +80,50 @@ class App extends Component {
             return;
         }
 
-
         // console.log('dziala', this.state.day, this.state.month, this.state.year);
-
         const currentDate = moment();
 
         const dateFromForm = moment([this.state.year, this.state.month -1, this.state.day]);
 
         const diffrence = currentDate.diff(dateFromForm, 'weeks');
 
-        // console.log(diffrence)
+        // blokada NaN, jeśli this.state.day przekracza ilość dni w danym miesiącu
+        if (isNaN(diffrence)) {
+            this.setState({
+                warning: "Nieprawidłowy dzień",
+                isValid: false
+            });
+            return;
+        }
 
+        if (diffrence < 0) {
+            this.setState({
+                warning: "Jeszcze nie możesz być w ciąży :)",
+                isValid: false
+            });
+            return;
+        }
+
+        // console.log(diffrence)
         let infoToDisplay = null;
 
         if (diffrence < 11) {
             infoToDisplay = 0;
-
         } else if (diffrence >= 11 && diffrence <= 14) {
             infoToDisplay = 1;
-
         } else if (diffrence >= 15 && diffrence <= 20) {
             infoToDisplay = 2;
-
         } else if (diffrence >= 21 && diffrence <= 26) {
             infoToDisplay = 3;
-
         } else if (diffrence >= 27 && diffrence <= 32) {
             infoToDisplay = 4;
-
         } else if (diffrence >= 33 && diffrence <= 37) {
             infoToDisplay = 5;
-
         } else if (diffrence >= 38 && diffrence <= 39) {
             infoToDisplay = 6;
-
         } else {
             infoToDisplay = 7;
         }
-
 
          this.setState ({
             isValid: true,
@@ -147,16 +131,17 @@ class App extends Component {
             week: diffrence,
             day: '',
             month: '', 
-            year: '',
+            year: '2018',
             warning: ''
         });
-
     }
 
     render() {
         
         if(this.state.isFetching) {
-            return <h1>Uwaga bo...</h1>
+            return <h1 style={{
+                textAlign: 'center'
+            }}>Uwaga bo...</h1>
         }
     
         return (
@@ -245,5 +230,6 @@ class App extends Component {
         );
     }
 }
+
 
 export default App;
