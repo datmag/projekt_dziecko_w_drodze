@@ -3,6 +3,20 @@ import './App.scss';
 import * as firebase from 'firebase';
 import moment from 'moment';
 
+import PageNavBar from '../PageNavBar/PageNavBar'
+import PageInfoBar from '../PageInfoBar/PageInfoBar'
+
+
+// class PageSearchBar extends Component {
+
+//     render (){
+//         return (
+        
+//         );
+//     }
+// }
+
+
 class App extends Component {
     state = {
         texts: [],
@@ -139,9 +153,15 @@ class App extends Component {
     render() {
         
         if(this.state.isFetching) {
-            return <h1 style={{
-                textAlign: 'center'
-            }}>Uwaga bo...</h1>
+            return (
+                <div>
+                    <h1 style={{
+                        fontSize: '100px',
+                        textAlign: 'center'
+                    }}
+                    >Uwaga bo...</h1>
+                </div>
+            );
         }
     
         return (
@@ -149,80 +169,25 @@ class App extends Component {
 
                 <div className='mainBackground'>
 
-                    <nav className='page-navbar'>
-                        <div className='container'>
-                            <h1>DZIECKO W DRODZE!</h1>
-                            <ul className="page-navbar-list">
-                                <li className="page-navbar-list-item">
-                                    <a href="/" className='page-navbar-list-link'>Start</a>
-                                </li>
-                                {/* <li className="page-navbar-list-item">
-                                    <a href="/" className='page-navbar-list-link'>Wybierz tydzień</a>
-                                </li> */}
-                                {/* <li className="page-navbar-list-item">
-                                    <a href="/" className='page-navbar-list-link'>Chat</a>
-                                </li> */}
-                                <li className="page-navbar-list-item">
-                                    <a href="/" className='page-navbar-list-link'>Zaloguj się</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </nav>
+                    <PageNavBar />
 
-                    <div className='container'>
-                        <div className='page-search-bar'>
-                            <form className='page-search-bar-form'>
-                                <h1>Podaj datę ostatniej miesiączki</h1>
-                                    <input value={this.state.day} onChange={this.changeDay} type="text" placeholder="Dzień" id='day'/>
-                                    <input value={this.state.month} onChange={this.changeMonth} type="text" placeholder="Miesiąc" id='month'/>
-                                    <input value={this.state.year} onChange={this.changeYear} type="text" placeholder="Rok" id='year'/>
-                                    <input type="submit" value='Potwierdź' onClick={this.sendMessage} id='submit'/>
-
-                                    <p style={{color: "red"}}>{this.state.warning}</p>
-                            </form>
-                        </div>
-                    </div>
-                    
-                    <div className='page-info-bar'>
-                        <div className='container'>
-                            <div className='page-info-bar-section'>
-                                <h1>Jesteś w {this.state.week} tygodniu</h1>
-                                <h2>{this.state.texts[this.state.currentInfo].title}</h2>
-                                <div className='lists'>
-
-                                    <div className='list-cont'>
-                                        <div className='page-info-bar-section-header-list'>
-                                        <h2>
-                                            Świadczenia profilaktyczne wykonywane przez lekarza lub położną i działania w zakresie promocji zdrowia:
-                                        </h2>
-                                        </div>           
-                                        <ol>
-                                            {
-                                                this.state.texts[this.state.currentInfo].left.map((e,i) => {
-                                                    return <li key={i}>{e}</li>
-                                                })
-                                            }
-                                        </ol>
-                                    </div>
-
-                                    <div className='list-cont'>
-                                        <div className='page-info-bar-section-header-list'>
-                                        <h2>Badania diagnostyczne i konsultacje medyczne</h2>
-
-                                        </div>
-                                        <ol>
-                                            {
-                                                this.state.texts[this.state.currentInfo].right.map((e,i) => {
-                                                    return <li key={i}>{e}</li>
-                                                })
-                                            }
-                                        </ol>
-                                    </div>
-
-                                </div>
+                    {
+                        this.state.isValid
+                            ?  <PageInfoBar week={this.state.week} texts={this.state.texts} currentInfo={this.state.currentInfo}/>
+                            :                     <div className='container'>
+                            <div className='page-search-bar'>
+                                <form className='page-search-bar-form'>
+                                    <h1>Podaj datę ostatniej miesiączki</h1>
+                                        <input value={this.state.day} onChange={this.changeDay} type="text" placeholder="Dzień" id='day'/>
+                                        <input value={this.state.month} onChange={this.changeMonth} type="text" placeholder="Miesiąc" id='month'/>
+                                        <input value={this.state.year} onChange={this.changeYear} type="text" placeholder="Rok" id='year'/>
+                                        <input type="submit" value='Potwierdź' onClick={this.sendMessage} id='submit'/>
+    
+                                        <p style={{color: "red"}}>{this.state.warning}</p>
+                                </form>
                             </div>
                         </div>
-                    </div>
+                    }
 
                 </div>
                 
